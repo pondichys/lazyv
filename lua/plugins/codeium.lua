@@ -20,5 +20,17 @@ return {
       local cmp = require("cmp")
       opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "codeium" } }))
     end,
+    -- This function removes all Codeium server binaries except the most recent one. Credit to https://github.com/chrisgrieser
+    build = function()
+      local bin_path = vim.fn.stdpath("data") .. "/codeium"
+      local oldBinaries = vim.fs.find(function()
+        return true
+      end, { type = "file", limit = math.huge, path = bin_path })
+      table.remove(oldBinaries) -- remove last item (= most up to date binary) from list
+      for _, binaryPath in pairs(oldBinaries) do
+        os.remove(binaryPath)
+        os.remove(vim.fs.dirname(binaryPath))
+      end
+    end,
   },
 }
