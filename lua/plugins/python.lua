@@ -3,7 +3,7 @@ return {
   {
     "williamboman/mason.nvim",
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, { "black" })
+      vim.list_extend(opts.ensure_installed, { "black", "pylyzer" })
     end,
   },
   {
@@ -16,6 +16,11 @@ return {
   "neovim/nvim-lspconfig",
   opts = {
     servers = {
+      pylizer = {
+        python = {
+          checkOnType = true,
+        },
+      },
       ruff_lsp = {
         init_options = {
           settings = {
