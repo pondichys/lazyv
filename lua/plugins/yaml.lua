@@ -1,5 +1,17 @@
--- Configure yamlls
+-- Configure yaml editing
 return {
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, { "yaml" })
+    end,
+  },
+  {
+    "williamboman/mason.nvim",
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, { "yaml-language-server", "yamlfmt", "yamllint" })
+    end,
+  },
   "neovim/nvim-lspconfig",
   opts = {
     servers = {
